@@ -17,5 +17,3 @@ Gemfile.lock
 .DS_Store
 /public/assets
 /vendor
-/config/database.yml
-/config/carrierwave_config.yml

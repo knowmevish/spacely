@@ -1,0 +1,19 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: spacely_dev
+  pool: 5
+  username: root
+  password: root
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: spacely
+  pool: 5
+  username: root
+  password: root
+  socket: /tmp/mysql.sock
