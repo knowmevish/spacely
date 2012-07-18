@@ -8,8 +8,8 @@ This is a simple image uploader with the following features
 * Upload images from remote url
 * Upload images from the computer
 
-Spacely is rails 3.2.6 with Mysql database. Additional gems that were used to handle file uploads are carrierwave, fog and Rmagic.
-The app is powered by backbone,js in the forntend.
+_Spacely_ is _rails_ 3.2.6 with Mysql database. Additional gems that were used to handle file uploads are carrierwave, fog and Rmagic.
+The app is powered by _backbone.js_ in the forntend.
 
 ##How to Run 
 
