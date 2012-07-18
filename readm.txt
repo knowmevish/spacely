@@ -1,0 +1,140 @@
+IMAGE UPLOADER with drag and drop 
+
+Abstract :
+
+This is a simple image uploader with the following features
+
+a. Image upload using drag and drop
+b. Upload images from remote url
+c. Upload images from the computer
+
+
+
+How it works:
+
+It is a single page app (which means there is no page transition seen by the user). The front end is powered by the backbone framework and the backend framework is powered by rails.
+
+Backend -RAILS
+
+Rails 3.2.5 with Mysql database is used. Additional gems that were used to handle file uploads are carrierwave, fog, Rmagic.
+
+Backbone App:
+
+why Backbone.js ?? - This application could have been written without using backbone or any other framework. But there is a reason of why I chose Backbone.js . Writing this small application in javascript would have been difficult as I would have to write code to manage and keep my data in sync with HTML, my javascript functons and also with the database in the server. In most of the cases including this application, the code gets entangled between callback functions,selectors and we are left in a confused state. so the piece thats missing is having a STRUCTURAL approach. 
+
+BACKBONE.js provides this structural approach. It clearly splits the data and the view. It provides Models,collections (the actual data) and Views, which handles all events and renders the result . so Maintaing and organizing the code of the javascript appliations becomes very easy.
+
+File Uploader: 
+
+Following is the html page of the application
+
+<div class = "main-container">
+ <div class = "header"> Insert Image  </div>
+ <div class =  "hrstyle"></div>
+ <div class = "sidebar">
+  <div class = "upload"> Upload! </div>
+  <div class = "URL"> By URL </div>
+  <div class = "mybox"> My Box </div>
+ </div>
+ <div class = "image-window" id="image-window"></div>
+ <div class ="drwin">Drag and drop here <form id = "drform" enctype="multipart/form-data" name="drform"></form></div>
+ <div id="footr" class = "footer">
+  <form action="<%= images_path %>" method="post" enctype="multipart/form-data" id="postForm" name="fileform">
+   <input type="file" id="file" name="file"/>
+   <button type="submit" class="uploadb">Upload</button>
+  </form>
+   <form action="#" method="post" enctype="multipart/form-data" id="posturlForm" name="urlform">
+   <label> or Enter URL </label>
+   <input type="text" id="url" name="remote_image_url" />
+  </form>
+ </div>
+</div>
+
+Backbone Modal :
+
+Data is represented as modals. In this file uploader example, I have defined a modal called Image which has image id and image url as its attributes . every image that is being created has these attributes.
+
+ var Image_model = Backbone.Model.extend({
+ 		defaults: {
+      		"id": "-1",
+ 			"img_url" : "/temp"
+ 		}
+ }) // model ends
+
+ Collection :
+
+ A set of modals is collection. I have defined a collection called Images_Collection, which contain a set of images with  attributes id and url. the main advantage of collection is that we can bind events to the collection so that whenever the event is triggered on any modal that is part of this collection, this event will also be triggered on the collection.
+
+var Images_collection = Backbone.Collection.extend({
+	model : Image_model,
+	url : '/images'
+})
+
+The url property here defines the reference of the collection located on the server. For eg, a get request on /images will fetch you the collection stored in the server.
+
+Views
+
+A view in backbone is little different . They listen to events and execute rexpective functions . i have defined four views in my file uploader, namely
+
+footer - this contains the upload button and the url box through which images can be uploaded
+mybox- to display all the images that are uploaded
+dragdrop - to drag and drop images
+imageitem- when any particular image that is selected, this view is triggered
+
+
+var Myboxview = Backbone.View.extend({
+
+  	el: $('.image-window'),
+
+  	initialize : function() {
+  		var self = this
+      console.log(photos)
+      console.log(self.$el);
+  		console.log("inside mybox")
+  		_.bindAll(self,'render', 'renderOne', 'checklen')
+  		self.collection.on('add', self.renderOne)
+  		self.collection.on('reset', self.render)
+  		self.collection.on('remove', self.checklen)
+  		self.collection.fetch()
+  	}
+
+  	renderOne: function ( image ) {
+  		var self = this
+  		var imageView = new ImageItemView({ model: image })
+  		self.$el.append(imageView.render().el)
+  	},
+
+  	render: function() {
+  		var self = this,
+  				template = ""
+  		console.log('render')
+
+  		self.collection.each( function ( image ) {
+  			var imageView = new ImageItemView({ model: image })
+  			self.$el.append(imageView.render().el)
+  		})
+  	},
+  	
+  	checklen : function(coll) {
+  		var self = this
+  		console.log("len",self.collection)
+  	} 
+  });//myboxview
+
+one  of the very important feature about the backbone view is binding the collction to the view.
+
+lets look at the following lines from the above view: 
+
+self.collection.on('add', self.renderOne)
+self.collection.on('remove', self.checkLen)
+
+whenever there is new model coming to the collection or if a model is removed from the collection, the callback functions renderOne and checkLen is called. this happens in the entire application i.e consider there is more view where a function removes a model from the collection. when that event happens, immediately checkLen function is called as the collection is binded with an event and a callback function here. This is one of the very important concept that helps to keep the data in sync with the javascript logic.
+
+
+The next important thing in view is bindAll 
+
+._bindAll(object,list of methods)
+
+This binds the list of methods and executes those methods in the context of the object specified. In the example above, the methods render,renderone and checklen are executed in the context of the myboxview object.
+ 
+

@@ -1,0 +1,140 @@
+   .top {
+      border-bottom: 1px solid #ccc;
+      position: fixed;
+      padding: 25px 30px;
+      top:0;
+      right: 0;
+      left: 0;
+      background: #fff;
+    }
+
+    .top h1 {
+      font-size: 42px;
+      font-weight: 200;
+      line-height: 1em;
+    }
+
+    .top h3 {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 42px;
+    }
+
+    .bottom {
+      border-top: 1px solid #ccc;
+      position: fixed;
+      padding: 30px 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #fff;
+      font-size:40px;
+      /*height: 40px;*/
+    }
+    p {
+      font-size: 22px;
+      line-height: 1.2em;
+      color: #eee;
+    }
+
+    .img {
+      padding: 3px;
+      /*border: 1px solid #ccc;*/
+      margin: 15px;
+      float: left;
+      overflow: hidden;
+      /*height:170px;*/
+    }
+
+    .img .i {
+      /*width: 225px;*/
+    }
+
+    .image-window {
+      padding:95px 0px 0px 0px;
+      height:800px;
+    }
+
+    .addfile {
+      position:absolute;
+      background: #212020;
+      padding: 20px 20px 10px 20px;
+      text-align:center;
+      color: #fff;
+      font-weight: 200;
+      border: 0;
+      display: inline-block;
+    }
+
+    .fileinput {
+      position:absolute;
+      padding: 0px 20px 15px 0px;
+      text-align:center;
+      font-weight: 200;
+      font-size:35px;
+      display: inline-block; 
+      visibility:hidden;    
+    }
+
+    .enterurl {
+      position: absolute;
+      right:20px;
+      background: #212020;
+      padding: 20px 20px 10px 20px;
+      text-align:center;
+      color: #fff;
+      font-weight: 200;
+      border: 0;
+      display: inline-block;
+    }
+  
+   .urlupload {
+      position:absolute;
+      right:200px;
+      padding: 20px 20px 10px 0px;
+      width:250px;
+      /*visibility:hidden;  */
+      font-size:35px;
+    }
+
+    input[type="text"] {
+      display: inline-block;
+      height: 35px;
+      padding: 10px 10px 0px 10px;
+      margin-bottom: 9px;
+      font-size: 23px;
+      line-height: 18px;
+      color: #555;
+      top:30px;
+      /*visibility :hidden;*/
+    }
+
+    .mainurl {
+      visibility:hidden;
+    }
+
+    .sub {
+      position: absolute;
+      right:70px;
+      background: #212020;
+      width:145px;
+      font-size:24px;
+      padding: 20px 10px 10px 20px;
+      text-align:center;
+      color: #fff;
+      font-weight: 200;
+      border: 0;
+      display: inline-block;
+      top:30px;
+      
+    }
+
+   #spinicon {
+    /*background: #333;*/
+    color: white;
+    float: left;
+    width: 40px;
+    height: 40px;
+   }
+
+ 

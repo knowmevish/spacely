@@ -1,0 +1,62 @@
+<div class="top">
+    <div class="container-fluid">
+      <div class='row-fluid'>
+        <div class='span6'>
+          <h1>Space.ly</h1>
+         <!-- <div class="twtr">
+            
+          </div>-->
+        </div>
+        <div class='span3' style='text-align:center'>
+          <span id="spinicon" class="spin"></span>
+        </div>
+        <div class='span3'>
+           <span class="twtr">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-text="Check out spacely.cloudfoundry.com. My cool space" data-via="knowmevish" data-hashtags="teamdotly">Tweet</a> 
+          </span>
+          <span class="fbshare">
+            <a href="#"><img src ="/assets/fshare.gif" ></a>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class ="image-window" id="image-window"> 
+  
+</div>
+<div class="bottom">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class ="span6">
+        <span class="addfile">+ AddFile</span>
+        <form action="<%= images_path %>" method="post" enctype="multipart/form-data" id="postForm" name="fileform">
+          <input type="file" id="file" name="file" class="fileinput"/> 
+        </form>
+        <!--<button type="submit" class="btn btn-primary">Upload</button>-->
+      </div>
+      <div class="span6" style='text-align:right'>
+        <span class="enterurl"> + Enter URL </span>
+        <div class= "mainurl">
+          <form action="#" method="post" enctype="multipart/form-data" id="posturlForm" name="urlform">
+            <input type="submit" class="sub" value="upload"/>
+            <input type="text" id="url" name="remote_image_url" class="urlupload" value="URL of Image"/> 
+           
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+<% content_for :js do %>
+<script>
+var read_me = 0;
+var shurl = window.location.pathname;
+var furl = 'http://www.facebook.com/sharer.php?u' + shurl
+</script>
+<% end %>
+
+
+

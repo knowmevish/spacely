@@ -1,0 +1,21 @@
+
+<div class = "main-container">
+ <div class = "header"> 
+
+  <form action="<%= images_path %>" method="post" enctype="multipart/form-data" id="postForm" name="fileform">
+   <input type="file" id="file" name="file"/>
+   <button type="submit" class="uploadb">Upload</button>
+  </form>
+   <form action="#" method="post" enctype="multipart/form-data" id="posturlForm" name="urlform">
+   <label> or Enter URL </label>
+   <input type="text" id="url" name="remote_image_url" />
+  </form>
+ </div>
+ <div class =  "hrstyle"></div>
+ <div class = "image-window" id="image-window"></div>
+ <div id="footr" class = "footerform">
+  
+ </div>
+</div>
+
+
