@@ -11,6 +11,13 @@ This is a simple image uploader with the following features
 __Spacely__ is __rails__ 3.2.6 with Mysql database. Additional gems that were used to handle file uploads are carrierwave, fog and Rmagic.
 The app is powered by __backbone.js__ in the forntend.
 
-##How to Run 
+##Deploying the app on Cloud Foundry
+Fork the project and then 
+```ruby
+git clone git@github.com:<your_name>/spacely.git spacely
+cd spacely
+bundle install;bundle package
+rake assets:precompile
+```
 
 
