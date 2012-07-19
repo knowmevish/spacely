@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-	console.log("hi vishwa")
 	//backbone views on the side bar
   var FooterView = Backbone.View.extend ({
 
@@ -22,8 +21,6 @@ $(document).ready(function() {
 
     onClickUrl: function() {
       var self = this
-      console.log("in url")
-      //$('.enterurl').css({'visibility':'hidden'})
       $('.enterurl').fadeOut("slow")
       $('.mainurl').css({'visibility':'visible'})
       $('.mainurl').show()
@@ -81,7 +78,6 @@ $(document).ready(function() {
     				"img_url": response.data[0].img_url,
             "img_url_thumb": response.data[0].img_url_thumb
           })
-          console.log("he",response.data[0].img_url_thumb)
 	   			self.collection.add(new_img)
   			}
   		})
@@ -95,62 +91,42 @@ $(document).ready(function() {
 
     events: {
       "click .img" : "onMouseClick",
-      //"mouseout .img" : "onMouseOut"
     },
 
   	initialize : function() {
   		var self = this
   		_.bindAll(self,'render', 'renderOne', 'checklen')
-      //var target = document.getElementById('spinicon');
-      //console.log(target)
-      console.log($('#spinicon')[0])
       spinner.spin($('#spinicon')[0])
   		self.collection.on('add', self.renderOne)
   		self.collection.on('reset', self.render)
   		self.collection.on('remove', self.checklen)
   		self.collection.fetch({success: function() { spinner.stop() } })
-      //spinner.stop()
   	},
 
     onMouseClick : function(e) {
       var self = this
-      console.log("here",$(e.target))
+      $('.modal-body').empty()
       var model_cid = $(e.target).attr('data-id')
-      //console.log("hi",model_cid)
       var current_model = self.collection.getByCid(model_cid) 
-      //console.log("her",current_model)
-      //$(e.target).closest(".img").find("img").remove();
-      $('.modal-body').html('')
-      $('.modal-body').append("<img src='" + current_model.attributes.img_url+"'/>")
-      $('#myModal').modal(show)
-     // $(e.target).closest(".img").append("<img src='" + current_model.attributes.img_url+"'/>")
+      var img_height
+      var img_width
+      var img_tag = new Image()
+      img_tag.src = current_model.attributes.img_url
+      $(img_tag).load(function() {
+        img_height = img_tag.height
+        img_width = img_tag.width
+        
+        $('.modal').css({'width': img_width, 'margin-left':-(img_width/2),'margin-top':-(img_height/2)})
+        $('.modal-body').css({'max-height': img_height})
+        $('.modal-body').append("<img class='myimg' src='" + current_model.attributes.img_url+"'/>")
+        //$('#myModal').modal({show:true})
+       
+      })
+      $('.myimg').load(function() {
+        $('#myModal').modal({show:true})
+      })
 
-      // $(e.target).closest(".img").css({
-      //   'overflow':'auto',
-      //   // 'width': 'auto',
-      //   // 'height': 'auto'
-      // })
-      // .find('img')
-      // .attr('src',current_model.get('img_url'))
-      //.css({'width': '500'})
     },
-
-    // onMouseOut : function(e) {
-    //   console.log("here")
-    //   var self = this
-    //   var model_cid = $(e.target).attr('data-id')
-    //   console.log("hi",model_cid)
-    //   var current_model = self.collection.getByCid(model_cid) 
-    //   console.log("her",current_model.attributes)
-
-    //   $(e.target).closest(".img").find("img:last").remove();
-    //   // $(e.target).closest(".img").css({
-    //   //   'overflow': 'hidden',
-    //   //    'width' : '170px',
-    //   //   'height' : '170px'
-    //   // })
-      
-    // },
 
   	renderOne: function ( image ) {
   		var self = this
@@ -166,7 +142,6 @@ $(document).ready(function() {
     
   		self.collection.each( function ( image ) {
   			var imageView = new ImageItemView({ model: image })
-        console.log("image",image)
         self.$el.append("<div class='img' data-toggle='modal' data-target='#myModal'><img class='i' src='" + image.get('img_url_thumb') +"' data-id='" +image.cid+"'/></div>")
   		})
      spinner.stop()
@@ -205,9 +180,9 @@ $(document).ready(function() {
   		var self = this
   		e.preventDefault()
   		e.stopPropagation()
+      spinner.spin($('#spinicon')[0])
   		self.$el.removeClass('hover')
   		self.$el.css('background-color','white')
-  		console.log("image received")
   		var img_data = e.originalEvent.dataTransfer.files
   		var file = img_data[0]
   		var inform = document.getElementById('drform')
@@ -234,7 +209,6 @@ $(document).ready(function() {
   	}, 
 
   	initialize: function () {
-      console.log("hello")
   	}
   })//dragdrop
 
@@ -252,7 +226,6 @@ $(document).ready(function() {
   	},
 
   	render: function () {
-       console.log("img view render")
   		var self = this
   		self.$el.html("<img class='i' src='" + self.model.get('img_url') +"'/><div class ='delete'>Delete</div>")
   		return self
@@ -275,32 +248,17 @@ $(document).ready(function() {
 
   	onClickDelete : function() {
   		var self = this 
-  		console.log("delete")
-  		console.log(self.model)
-
-  		console.log(self.model.collection.length)
-  		//self.model.collection.remove(self.model);
   		self.model.destroy()
   		self.$el.remove()
-  		
   	}
-
   })
 
-
-
-
-	
 
 	var hist = []
   //****************************************************************************************************
 
  var photos = [];
-  
-
-  console.log("in app",read_me);
-
-  var opts = {
+ var opts = {
           lines: 12, // The number of lines to draw
           length: 7, // The length of each line
           width: 5, // The line thickness
@@ -347,7 +305,6 @@ $(document).ready(function() {
 
   var Imgs = new Images_collection()
   var Img = new Image_model();
-  //var mybox = new Myboxview({collection : Imgs})
 
   if (read_me == 0) {
     var mybox = new Myboxview({collection : Imgs})
@@ -364,46 +321,32 @@ $(document).ready(function() {
       type: "POST",
       data: {token:req_token},
       success: function(response) {
-       console.log(response) 
        for(var i =0;i<response.length;i++) {
           $('.image-window').append("<div class='img' data-toggle='modal' data-target='#myModal'><img class='i' src='" + response[i].img_url_thumb +"' data-id='" + response[i].id+"' /></div>")
           id_url.push({id:response[i].id, img_url:response[i].img_url})
         }
       }         
     })     
-    console.log("helllo",id_url)
     $('.img').live('click',function(e) {
-      console.log("here",$(e.target))
+      $('.modal-body').html('')
       var img_id = $(e.target).attr("data-id")
+      var img_height
+      var img_width
+      var img_tag = new Image()
       for(var i=0;i<id_url.length;i++) {
         if(img_id==id_url[i].id) {
-          $('.modal-body').html('')
-          $('.modal-body').append("<img src='" + id_url[i].img_url+"'/>")
-          $('#myModal').modal(show)
+          img_tag.src = id_url[i].img_url
+          console.log(id_url[i].img_url)
+          $(img_tag).load(function() {
+            img_height = img_tag.height
+            img_width = img_tag.width
+            $('.modal').css({'width': img_width, 'margin-left':-(img_width/2),'margin-top':-(img_height/2)})
+            $('.modal-body').css({'max-height': img_height})
+            $('.modal-body').append("<img src='" + img_tag.src+"'/>")
+            $('#myModal').modal('show')
+          })
         }
       }
-      //var full_img_url = id_url[img_id]
-      //console.log("full",img_id)
-      // $('.modal-body').html('')
-      // $('.modal-body').append("<img src='" + current_model.attributes.img_url+"'/>")
-      // $('#myModal').modal(show)
-      // $(e.target).closest(".img").css({
-      //   'overflow':'auto',
-      //   'width': 'auto',
-      //   'height': 'auto'
-      // })
-      // .find('img')
-      // .css({'width': '500'})
     })
-
-    // $('.img').live('mouseout', function(e) {
-    //   console.log("here")
-    //   var self = this
-    //   $(e.target).closest(".img").css({
-    //     'overflow': 'hidden',
-    //     'width' : '225px',
-    //     'height' : '170px'
-    //   })
-    // })
   }
 }) //close document

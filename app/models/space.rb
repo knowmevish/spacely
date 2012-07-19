@@ -13,7 +13,8 @@ class Space < ActiveRecord::Base
       data = []
       data << {
         :id => image.id,
-        :img_url => image.image_url
+        :img_url => image.image_url,
+        :img_url_thumb => image.image_url(:thumb)
       }
       puts "hello"
       puts data.inspect
