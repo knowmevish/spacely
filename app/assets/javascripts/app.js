@@ -25,7 +25,7 @@ $(document).ready(function() {
       $('.mainurl').css({'visibility':'visible'})
       $('.mainurl').show()
       $('.urlupload').animate({
-        width:'500px'
+        width:'400px'
       },1000,function() {})
     },
 
@@ -34,7 +34,6 @@ $(document).ready(function() {
   		e.preventDefault()
   		e.stopPropagation()
       spinner.spin($('#spinicon')[0])
-  
   		var infile = document.getElementById('file')
   		var inform = document.getElementById('fileform')
   		var file = infile.files[0]
@@ -109,37 +108,11 @@ $(document).ready(function() {
       spinner.spin($('#spinmodal')[0])
       var model_cid = $(e.target).attr('data-id')
       var current_model = self.collection.getByCid(model_cid) 
-      var img_height
-      var img_width
-      var img_tag = new Image()
-      img_tag.src = current_model.attributes.img_url
-      img_tag.align = "center"
-      $(img_tag).load(function() {
-        console.log(img_tag.height,img_tag.width)
-        if(img_tag.height<500) {
-          img_height = img_tag.height
-        }
-        else {
-          img_height = 500
-        }
-        if (img_tag.width < 800) {
-          img_width = img_tag.width
-        }
-        else {
-          img_width = 800
-        }    
-        $(img_tag).css({'width':img_width,'height':img_height})
-        $('.modal-body').css({'text-align': 'center'})
-        $('.modal-body').append($(img_tag))
-        spinner.stop()
-        $('#myModal').modal({show:true})
-      })
-
+      showimage(current_model.attributes.img_url)
     },
 
   	renderOne: function ( image ) {
   		var self = this
-  		var imageView = new ImageItemView({ model: image })
       //spinner
       self.$el.append("<div class='img' data-toggle='modal' data-target='#myModal'><img class='i' src='" + image.get('img_url_thumb') +"' data-id='" +image.cid+"'/></div>")
       spinner.stop()   
@@ -150,7 +123,6 @@ $(document).ready(function() {
   				template = ""
     
   		self.collection.each( function ( image ) {
-  			var imageView = new ImageItemView({ model: image })
         self.$el.append("<div class='img' data-toggle='modal' data-target='#myModal'><img class='i' src='" + image.get('img_url_thumb') +"' data-id='" +image.cid+"'/></div>")
   		})
      spinner.stop()
@@ -215,58 +187,9 @@ $(document).ready(function() {
 			xhr.open('POST', '/images', true)
 	   	xhr.send(formData)
   		return false
-  	}, 
-
-  	initialize: function () {
   	}
   })//dragdrop
 
-  var ImageItemView = Backbone.View.extend({
-  	tagName: "p",
-
-  	events: {
-  		 "click": "onClickSelect",
-  		 "click .selected .delete": "onClickDelete"
-  	},
-
-  	initialize: function () {
-  		var self = this
-  		
-  	},
-
-  	render: function () {
-  		var self = this
-  		self.$el.html("<img class='i' src='" + self.model.get('img_url') +"'/><div class ='delete'>Delete</div>")
-  		return self
-  	},
-
-  	onClickSelect: function() {
-  		var self = this
-  		if (hist.length < 1) {
-  			hist.push(self.$el)
-  			self.$el.addClass('selected')
-  		}
-  		else {
-  			var prev_dom = hist.shift()
-  			hist = []
-  			$(prev_dom).removeClass('selected')
-  			hist.push(self.$el)
-  			self.$el.addClass('selected')
-  		}  		
-  	},
-
-  	onClickDelete : function() {
-  		var self = this 
-  		self.model.destroy()
-  		self.$el.remove()
-  	}
-  })
-
-
-	var hist = []
-  //****************************************************************************************************
-
- var photos = [];
  var opts = {
           lines: 12, // The number of lines to draw
           length: 7, // The length of each line
@@ -320,8 +243,7 @@ $(document).ready(function() {
     var footer_view = new FooterView({collection: Imgs})
     var drview = new DragDropView({collection: Imgs})
   }
-   else{
-    
+  else {
     var req_url = window.location.pathname
     var req_token = req_url.split('/')[2]
     var id_url =[]
@@ -340,34 +262,38 @@ $(document).ready(function() {
       $('.modal-body').html('')
       spinner.spin($('#spinmodal')[0])
       var img_id = $(e.target).attr("data-id")
-      var img_height
-      var img_width
-      var img_tag = new Image()
       for(var i=0;i<id_url.length;i++) {
         if(img_id==id_url[i].id) {
-          img_tag.src = id_url[i].img_url
-          console.log(id_url[i].img_url)
-          $(img_tag).load(function() {
-            if(img_tag.height<500) {
-              img_height = img_tag.height
-            }
-            else {
-              img_height = 500
-            }
-            if (img_tag.width < 800) {
-              img_width = img_tag.width
-            }
-            else {
-              img_width = 800
-            }    
-            $(img_tag).css({'width':img_width,'height':img_height})
-            $('.modal-body').css({'text-align': 'center'})
-            $('.modal-body').append($(img_tag))
-            spinner.stop()
-             $('#myModal').modal('show')
-          })
+          showimage(id_url[i].img_url)
         }
       }
     })
   }
+
+  function showimage(img_url) {
+    var img_height
+    var img_width
+    var img_tag = new Image()
+    img_tag.src = img_url
+    $(img_tag).load(function() {
+      if(img_tag.height<500) {
+        img_height = img_tag.height
+      }
+      else {
+        img_height = 500
+      }
+      if (img_tag.width < 800) {
+        img_width = img_tag.width
+      }
+      else {
+        img_width = 800
+      }    
+      $(img_tag).css({'width':img_width,'height':img_height})
+      $('.modal-body').css({'text-align': 'center'})
+      $('.modal-body').append($(img_tag))
+      spinner.stop()
+       $('#myModal').modal('show')
+    })
+  }
+
 }) //close document
