@@ -112,19 +112,32 @@ $(document).ready(function() {
       var img_width
       var img_tag = new Image()
       img_tag.src = current_model.attributes.img_url
+      img_tag.align = "center"
       $(img_tag).load(function() {
-        img_height = img_tag.height
-        img_width = img_tag.width
-        
-        $('.modal').css({'width': img_width, 'margin-left':-(img_width/2),'margin-top':-(img_height/2)})
-        $('.modal-body').css({'max-height': img_height})
-        $('.modal-body').append("<img class='myimg' src='" + current_model.attributes.img_url+"'/>")
-        //$('#myModal').modal({show:true})
+        console.log(img_tag.height,img_tag.width)
+        if(img_tag.height<500) {
+          img_height = img_tag.height
+        }
+        else {
+          img_height = 500
+        }
+        if (img_tag.width < 800) {
+          img_width = img_tag.width
+        }
+        else {
+          img_width = 800
+        }    
+        $(img_tag).css({'width':img_width,'height':img_height})
+        //$('.modal').css({'width': img_width, 'margin-left':-(img_width/2),'margin-top':-(img_height/2)})
+        $('.modal-body').css({'text-align': 'center'})
+        //$('.modal-body').append("<img align=''center' class='myimg' src='" + current_model.attributes.img_url+"'/>")
+        $('.modal-body').append($(img_tag))
+        $('#myModal').modal({show:true})
        
       })
-      $('.myimg').load(function() {
-        $('#myModal').modal({show:true})
-      })
+      // $('.myimg').load(function() {
+      //   $('#myModal').modal({show:true})
+      // })
 
     },
 
