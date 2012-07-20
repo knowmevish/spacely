@@ -15,7 +15,7 @@
               <a href="https://twitter.com/share" class="twitter-share-button" data-text="Check out spacely.cloudfoundry.com. My cool space" data-via="knowmevish" data-hashtags="teamdotly">Tweet</a> 
           </span>
           <span class="fbshare">
-            <a href="#"><img src ="/assets/fshare.gif" ></a>
+            <a href="#"><img src ="/assets/facebook.png" ></a>
           </span>
       </div>
     </div>
@@ -27,12 +27,16 @@
 <div class="bottom">
   <div class="container-fluid">
     <div class="row-fluid">
-      <div class ="span6">
+      <div class ="span3">
         <span class="addfile">+ AddFile</span>
         <form action="<%= images_path %>" method="post" enctype="multipart/form-data" id="postForm" name="fileform">
           <input type="file" id="file" name="file" class="fileinput"/> 
         </form>
         <!--<button type="submit" class="btn btn-primary">Upload</button>-->
+      </div>
+      <div class="span3">
+        <span class="dragdrop"> Drag, Drop Here </span>
+        <img src="/assets/arrow-up.jpg" style="height:50px;width:72px"/>
       </div>
       <div class="span6" style='text-align:right'>
         <span class="enterurl"> + Enter URL </span>
