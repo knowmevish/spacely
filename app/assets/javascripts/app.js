@@ -106,6 +106,7 @@ $(document).ready(function() {
     onMouseClick : function(e) {
       var self = this
       $('.modal-body').empty()
+      spinner.spin($('#spinmodal')[0])
       var model_cid = $(e.target).attr('data-id')
       var current_model = self.collection.getByCid(model_cid) 
       var img_height
@@ -132,7 +133,9 @@ $(document).ready(function() {
         $('.modal-body').css({'text-align': 'center'})
         //$('.modal-body').append("<img align=''center' class='myimg' src='" + current_model.attributes.img_url+"'/>")
         $('.modal-body').append($(img_tag))
+        spinner.stop()
         $('#myModal').modal({show:true})
+        
        
       })
       // $('.myimg').load(function() {
